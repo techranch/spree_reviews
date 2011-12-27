@@ -16,8 +16,11 @@ Rails.application.routes.draw do
     resources :review_settings
   end
   
-  namespace :products do 
-    resources :reviews
+  resources :products do 
+    resources :reviews do
+      get :terms
+      post :approve
+    end
   end
 end
 
