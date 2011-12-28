@@ -19,6 +19,9 @@ class ReviewsController < Spree::BaseController
     params[:review][:rating].sub!(/\s*stars/,'') unless params[:review][:rating].blank?
 
     @review = Review.new :product => @product
+    if @product.rating.nil? 
+      @product.rating = Rating.create :value => 0, :count => 0
+    end
     if @review.update_attributes(params[:review]) 
       flash[:notice] = 'Review was successfully submitted.'
       redirect_to (product_path(@product))
@@ -26,6 +29,7 @@ class ReviewsController < Spree::BaseController
       # flash[:notice] = 'There was a problem in the submitted review'
       render :action => "new" 
     end
+    @product.rating.add_rating(@review.rating)
   end
   def terms
     
