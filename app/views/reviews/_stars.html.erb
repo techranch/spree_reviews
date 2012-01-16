@@ -11,9 +11,8 @@
     name  = defined?(review).nil? ? Time.now.tv_usec.to_s : "review_#{review}" 
   end %>
 <% for i in 1..Rating.get_nb_stars %>
-<% id_star = "choose_star_" + i.to_s %>
   <input name="<%= name %>" 
-         type="radio" class="star" id="<%= id_star %>"
+         type="radio" class="star"
          value="<%= pluralize(i, 'star') %>" <%= state %> 
          <%= "checked=\"checked\"" if i==stars  %> />
 <% end %>
