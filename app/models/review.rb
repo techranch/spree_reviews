@@ -1,5 +1,5 @@
 class Review < ActiveRecord::Base
-  belongs_to :product
+  belongs_to :product, class_name: 'Spree::Product'
 
   validates_presence_of :user_id, :title, :review
   validates_numericality_of :rating, :only_integer => true

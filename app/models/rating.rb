@@ -1,5 +1,5 @@
 class Rating < ActiveRecord::Base
-  belongs_to :product
+  belongs_to :product, class_name: 'Spree::Product'
 
   NB_STARS=5
   def self.get_nb_stars
