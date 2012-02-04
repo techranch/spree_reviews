@@ -1,21 +1,16 @@
-class Admin::ReviewsController < Spree::Admin::BaseController
+class Admin::ReviewsController < Spree::Admin::ResourceController
   #require_role "admin" # You might want to remove this, and add security in the /config/easy_role_permissions.yml file
   layout 'admin'
 
-  resource_controller
+  before_filter :index_before, :only => [:index]
 
-  index.before do 
-    @unapproved_reviews = Review.not_approved.find(:all, :order => "created_at DESC")
-    @approved_reviews   = Review.approved.find(:all, :order => "created_at DESC")
-  end
-
-  create.response do |wants|
-    wants.html { redirect_to admin_reviews_path }
-  end
-
-  update.response do |wants|
-    wants.html { redirect_to admin_reviews_path }
-  end
+  #create.response do |wants|
+  #  wants.html { redirect_to admin_reviews_path }
+  #end
+  #
+  #update.response do |wants|
+  #  wants.html { redirect_to admin_reviews_path }
+  #end
 
   def approve
     r = Review.find(params[:id])
@@ -34,4 +29,9 @@ class Admin::ReviewsController < Spree::Admin::BaseController
     redirect_to admin_reviews_path
   end
 
+  protected
+  def index_before
+    @unapproved_reviews = Review.not_approved.find(:all, :order => "created_at DESC")
+    @approved_reviews   = Review.approved.find(:all, :order => "created_at DESC")
+  end
 end

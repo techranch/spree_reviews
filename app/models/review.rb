@@ -12,6 +12,6 @@ class Review < ActiveRecord::Base
   scope :approval_filter, lambda {|*args| {:conditions => ["(? = 't') || (approved = 't')", Spree::Reviews::Config[:include_unapproved_reviews]]}} 
 
   scope :oldest_first, :order => "created_at asc"
-  scope :preview,      :limit => Spree::Reviews::Config[:preview_size], :order=>"created_at desc"
+  scope :preview,      :limit => Spree::Reviews::Config.preview_size, :order=>"created_at desc"
 
 end
